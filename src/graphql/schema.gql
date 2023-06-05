@@ -1,0 +1,23 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Query {
+  """Chat with GPT-3"""
+  chatGptQuery(createPromptInput: CreatePromptInput!): String!
+}
+
+input CreatePromptInput {
+  age: String!
+  education: String!
+  nationality: String!
+  mbti: String!
+  hobby: String!
+  interestedIn: String!
+  question: String!
+}
+
+type Mutation {
+  """Chat with GPT-3"""
+  chatGpt(createPromptInput: CreatePromptInput!): String!
+}
