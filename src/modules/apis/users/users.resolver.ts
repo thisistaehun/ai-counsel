@@ -1,5 +1,5 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateUserInput } from './dto/create-user.input';
+import { CreateUserInput } from './dto/create-user.dto';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
@@ -20,7 +20,7 @@ export class UsersResolver {
 
   @Query(() => User, { name: 'user' })
   findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.usersService.findOne(id);
+    return this.usersService.findOne('id', id);
   }
 
   @Mutation(() => User)

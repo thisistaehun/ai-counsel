@@ -1,17 +1,20 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { GqlAuthGuard } from 'src/modules/auth/guard/gql-auth.guard';
 import { ChatGptService } from './chat-gpt.service';
-import { CreatePromptInput } from './dtos/create.prompt.dt';
+import { PromptInput } from './dtos/prompt/prompt.dto';
 
 @Resolver({})
 export class ChatGptResolver {
   constructor(private readonly chatGptService: ChatGptService) {}
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => String, {
     description: 'Chat with GPT-3',
   })
   async chatGpt(
-    @Args('createPromptInput') createPromptInput: CreatePromptInput,
+    @Args('promptInput') promptInput: PromptInput,
   ): Promise<string> {
-    return this.chatGptService.chat(createPromptInput);
+    return this.chatGptService.chat(promptInput);
   }
 }

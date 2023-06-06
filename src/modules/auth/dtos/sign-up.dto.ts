@@ -1,4 +1,5 @@
 import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql';
+import { CreateUserOutput } from 'src/modules/apis/users/dto/create-user.dto';
 import { User } from 'src/modules/apis/users/entities/user.entity';
 import { LoginOutput } from './login.dto';
 
@@ -7,15 +8,14 @@ export class SignUpInput extends PickType(User, [
   'email',
   'password',
   'nickname',
-  'birth',
 ]) {}
 
 @ObjectType()
 export class SignUpOutput {
-  @Field(() => User, {
-    description: 'The User of the SignUp',
+  @Field(() => CreateUserOutput, {
+    description: 'The CreateUserOutput of the SignUp',
   })
-  user: User;
+  createUserOutput: CreateUserOutput;
 
   @Field(() => LoginOutput, {
     description: 'The LoginOutput of the SignUp',

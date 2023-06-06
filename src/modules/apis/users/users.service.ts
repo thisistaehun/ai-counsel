@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { CreateUserInput } from './dto/create-user.input';
+import { CreateUserInput } from './dto/create-user.dto';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 
@@ -13,10 +13,15 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  public create(createUserInput: CreateUserInput): Promise<User> {
-    this.hashPassword(createUserInput.password);
-    const newUser = this.userRepository.create(createUserInput);
-    return this.userRepository.save(newUser);
+  public async create(createUserInput: CreateUserInput): Promise<User> {
+    createUserInput.password = await this.hashPassword(
+      createUserInput.password,
+    );
+    const user = await this.userRepository.save(
+      this.userRepository.create(createUserInput),
+    );
+
+    return user;
   }
 
   public comparePassword(password: string, user: User) {
@@ -27,8 +32,8 @@ export class UsersService {
     return `This action returns all users`;
   }
 
-  public findOne(id: number) {
-    return `This action returns a #${id} user`;
+  public findOne(key: string, value: any) {
+    return this.userRepository.findOneOrFail({ where: { [key]: value } });
   }
 
   public findOneByEmail(email: string) {

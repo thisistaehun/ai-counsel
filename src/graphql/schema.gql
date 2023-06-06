@@ -13,15 +13,7 @@ type User {
 
   """The Nickname of the User"""
   nickname: String!
-
-  """The Birth of the User"""
-  birth: DateTime!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type LoginOutput {
   """The Token of the User"""
@@ -41,7 +33,7 @@ type Mutation {
   login(input: LoginInput!): LoginOutput!
 
   """Chat with GPT-3"""
-  chatGpt(createPromptInput: CreatePromptInput!): String!
+  chatGpt(promptInput: PromptInput!): String!
 }
 
 input CreateUserInput {
@@ -53,9 +45,6 @@ input CreateUserInput {
 
   """The Nickname of the User"""
   nickname: String!
-
-  """The Birth of the User"""
-  birth: DateTime!
 }
 
 input UpdateUserInput {
@@ -67,9 +56,6 @@ input UpdateUserInput {
 
   """The Nickname of the User"""
   nickname: String
-
-  """The Birth of the User"""
-  birth: DateTime
   id: Int!
 }
 
@@ -81,12 +67,139 @@ input LoginInput {
   password: String!
 }
 
-input CreatePromptInput {
-  age: String!
-  education: String!
-  nationality: String!
+input PromptInput {
+  """자기소개"""
+  selfIntroduction: SelfIntroductionInput!
+
+  """자기평가"""
+  selfEstimation: SelfEstimationInput!
+
+  """관심 직업"""
+  interestedJob: InterestedJobInput!
+}
+
+input SelfIntroductionInput {
+  """이름"""
+  name: String!
+
+  """나이"""
+  age: Int!
+
+  """MBTI"""
   mbti: String!
+
+  """전공"""
+  major: String!
+
+  """취미"""
   hobby: String!
+
+  """관심사"""
   interestedIn: String!
-  question: String!
+
+  """싫어하는 것"""
+  dislike: String!
+}
+
+input SelfEstimationInput {
+  """의사소통능력"""
+  Communication: level!
+
+  """리더십"""
+  Leadership: level!
+
+  """문제해결능력"""
+  ProblemSolving: level!
+
+  """조직능력"""
+  Organization: level!
+
+  """분석적 사고"""
+  AnalyticalThinking: level!
+
+  """창의성"""
+  Creativity: level!
+
+  """적응력"""
+  Adaptability: level!
+
+  """팀워크"""
+  Teamwork: level!
+
+  """자기관리"""
+  SelfManagement: level!
+}
+
+"""level"""
+enum level {
+  ONE
+  TWO
+  THREE
+  FOUR
+  FIVE
+}
+
+input InterestedJobInput {
+  """관심 직업 1지망"""
+  interestedJob1: JobType!
+
+  """관심 직업 2지망"""
+  interestedJob2: JobType!
+
+  """관심 직업 3지망"""
+  interestedJob3: JobType!
+}
+
+"""직업 종류"""
+enum JobType {
+  SoftwareDeveloper
+  Doctor
+  Nurse
+  Lawyer
+  Teacher
+  Manager
+  Accountant
+  MarketingExpert
+  GraphicDesigner
+  Engineer
+  Architect
+  Painter
+  Musician
+  Writer
+  Journalist
+  FilmDirector
+  Psychologist
+  SocialWorker
+  EnvironmentalEngineer
+  DigitalMarketer
+  DataAnalyst
+  Biologist
+  Astronomer
+  Statistician
+  MusicProducer
+  Photographer
+  WebDeveloper
+  MedicalDeviceEngineer
+  Beautician
+  SportsTrainer
+  InteriorDesigner
+  Actor
+  RestaurantOwner
+  TravelWriter
+  Chemist
+  Farmer
+  InternationalRelationsExpert
+  YouTuber
+  FoodResearcher
+  OfficeAdministrator
+  MedicalTechnician
+  CarDesigner
+  SportsCommentator
+  SocialMediaManager
+  SalesExpert
+  MarineBiologist
+  Mechanic
+  FinancialAnalyst
+  EarlyChildhoodEducator
+  OfficeManager
 }
