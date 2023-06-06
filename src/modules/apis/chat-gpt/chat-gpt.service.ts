@@ -1,18 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Configuration, OpenAIApi } from 'openai';
+import { EnvConfig } from 'src/modules/common/types/config';
 import { CreatePromptInput } from './dtos/create.prompt.dt';
 
 @Injectable()
 export class ChatGptService {
-  private configuration: Configuration;
-  private openai: OpenAIApi;
-  constructor(private readonly configService: ConfigService) {
-    this.configuration = new Configuration({
-      apiKey: this.configService.get<string>('OPENAI_API_KEY'),
-    });
-
-    this.openai = new OpenAIApi(this.configuration);
+  private _apiKey: string;
+  constructor(private readonly configService: ConfigService<EnvConfig>) {
+    this._apiKey = this.configService.get('OPENAI_API_KEY');
   }
 
   async chat(createPromptInput: CreatePromptInput): Promise<string> {
@@ -26,9 +21,7 @@ export class ChatGptService {
       const result = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${this.configService.get<string>(
-            'OPENAI_API_KEY',
-          )}`,
+          Authorization: `Bearer ${this._apiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(response),

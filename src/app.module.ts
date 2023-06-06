@@ -1,14 +1,18 @@
 import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import * as path from 'path';
-import { ChatGptModule } from './modules/chat-gpt/chat-gpt.module';
-import { EnvConfigModule } from './modules/env-config/env-config.module';
+import { ApiModule } from './modules/apis/api.module';
+import { DatabaseModule } from './modules/database/database.module';
 
 @Module({
   imports: [
-    EnvConfigModule,
+    ConfigModule.forRoot({
+      envFilePath: [`config/.${process.env.NODE_ENV}.env`],
+      isGlobal: true,
+    }),
     GraphQLModule.forRootAsync({
       driver: ApolloDriver,
       useFactory: async () => ({
@@ -18,7 +22,8 @@ import { EnvConfigModule } from './modules/env-config/env-config.module';
         plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
       }),
     }),
-    ChatGptModule,
+    ApiModule,
+    DatabaseModule,
   ],
 })
 export class AppModule {}

@@ -2,9 +2,83 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  id: Int!
+
+  """The Email of the User"""
+  email: String!
+
+  """The Password of the User"""
+  password: String!
+
+  """The Nickname of the User"""
+  nickname: String!
+
+  """The Birth of the User"""
+  birth: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type LoginOutput {
+  """The Token of the User"""
+  accessToken: String!
+}
+
 type Query {
+  users: [User!]!
+  user(id: Int!): User!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  signUp(input: LoginInput!): LoginOutput!
+  login(input: LoginInput!): LoginOutput!
+
   """Chat with GPT-3"""
-  chatGptQuery(createPromptInput: CreatePromptInput!): String!
+  chatGpt(createPromptInput: CreatePromptInput!): String!
+}
+
+input CreateUserInput {
+  """The Email of the User"""
+  email: String!
+
+  """The Password of the User"""
+  password: String!
+
+  """The Nickname of the User"""
+  nickname: String!
+
+  """The Birth of the User"""
+  birth: DateTime!
+}
+
+input UpdateUserInput {
+  """The Email of the User"""
+  email: String
+
+  """The Password of the User"""
+  password: String
+
+  """The Nickname of the User"""
+  nickname: String
+
+  """The Birth of the User"""
+  birth: DateTime
+  id: Int!
+}
+
+input LoginInput {
+  """The Email of the User"""
+  email: String!
+
+  """The Password of the User"""
+  password: String!
 }
 
 input CreatePromptInput {
@@ -15,9 +89,4 @@ input CreatePromptInput {
   hobby: String!
   interestedIn: String!
   question: String!
-}
-
-type Mutation {
-  """Chat with GPT-3"""
-  chatGpt(createPromptInput: CreatePromptInput!): String!
 }
