@@ -24,18 +24,18 @@ export class JwtAccessStrategy extends PassportStrategy(
           req,
         ) as string;
         const decoded = this.jwtService.decode(bearerToken);
-        if (decoded && decoded['exp'] < Date.now() / 1000) {
+        if (decoded && decoded['exp'] * 1000 < Date.now()) {
           throw new Error('토큰이 만료되었습니다.');
         }
         return bearerToken;
       },
       ignoreExpriraton: false,
-      secretOrKey: () => configService.get('JWT_SECRET'),
+      secretOrKey: configService.get('JWT_SECRET'),
     });
   }
 
   async validate(payload: any): Promise<User> {
-    const user = await this.userService.findOne('id', payload.id);
+    const user = await this.userService.findOneByEmail(payload.email);
     if (!user) {
       throw new Error('존재하지 않는 사용자입니다.');
     }

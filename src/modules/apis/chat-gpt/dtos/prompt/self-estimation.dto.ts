@@ -1,62 +1,49 @@
-import { Field, InputType, registerEnumType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class SelfEstimationInput {
-  @Field(() => level, {
+  @Field(() => Int, {
     description: '의사소통능력',
   })
-  Communication: level;
+  communication: number;
 
-  @Field(() => level, {
+  @Field(() => Int, {
     description: '리더십',
   })
-  Leadership: level;
+  leadership: number;
 
-  @Field(() => level, {
+  @Field(() => Int, {
     description: '문제해결능력',
   })
-  ProblemSolving: level;
+  problemSolving: number;
 
-  @Field(() => level, {
+  @Field(() => Int, {
     description: '조직능력',
   })
-  Organization: level;
+  organization: number;
 
-  @Field(() => level, {
+  @Field(() => Int, {
     description: '분석적 사고',
   })
-  AnalyticalThinking: level;
+  analyticalThinking: number;
 
-  @Field(() => level, {
+  @Field(() => Int, {
     description: '창의성',
   })
-  Creativity: level;
+  creativity: number;
 
-  @Field(() => level, {
+  @Field(() => Int, {
     description: '적응력',
   })
-  Adaptability: level;
+  adaptability: number;
 
-  @Field(() => level, {
+  @Field(() => Int, {
     description: '팀워크',
   })
-  Teamwork: level;
+  teamwork: number;
 
-  @Field(() => level, {
+  @Field(() => Int, {
     description: '자기관리',
   })
-  SelfManagement: level;
+  selfManagement: number;
 }
-
-export enum level {
-  ONE = 1,
-  TWO = 2,
-  THREE = 3,
-  FOUR = 4,
-  FIVE = 5,
-}
-
-registerEnumType(level, {
-  name: 'level',
-  description: 'level',
-});

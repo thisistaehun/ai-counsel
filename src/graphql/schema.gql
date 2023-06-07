@@ -8,9 +8,6 @@ type User {
   """The Email of the User"""
   email: String!
 
-  """The Password of the User"""
-  password: String!
-
   """The Nickname of the User"""
   nickname: String!
 }
@@ -18,6 +15,14 @@ type User {
 type LoginOutput {
   """The Token of the User"""
   accessToken: String!
+}
+
+type SignUpOutput {
+  """The User of the SignUp"""
+  user: User!
+
+  """The LoginOutput of the SignUp"""
+  loginOutput: LoginOutput!
 }
 
 type Query {
@@ -29,7 +34,7 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
-  signUp(input: LoginInput!): LoginOutput!
+  signUp(input: SignUpInput!): SignUpOutput!
   login(input: LoginInput!): LoginOutput!
 
   """Chat with GPT-3"""
@@ -40,9 +45,6 @@ input CreateUserInput {
   """The Email of the User"""
   email: String!
 
-  """The Password of the User"""
-  password: String!
-
   """The Nickname of the User"""
   nickname: String!
 }
@@ -51,12 +53,20 @@ input UpdateUserInput {
   """The Email of the User"""
   email: String
 
-  """The Password of the User"""
-  password: String
-
   """The Nickname of the User"""
   nickname: String
   id: Int!
+}
+
+input SignUpInput {
+  """The Email of the User"""
+  email: String!
+
+  """The Nickname of the User"""
+  nickname: String!
+
+  """The Password of the User"""
+  password: String!
 }
 
 input LoginInput {
@@ -103,103 +113,40 @@ input SelfIntroductionInput {
 
 input SelfEstimationInput {
   """의사소통능력"""
-  Communication: level!
+  communication: Int!
 
   """리더십"""
-  Leadership: level!
+  leadership: Int!
 
   """문제해결능력"""
-  ProblemSolving: level!
+  problemSolving: Int!
 
   """조직능력"""
-  Organization: level!
+  organization: Int!
 
   """분석적 사고"""
-  AnalyticalThinking: level!
+  analyticalThinking: Int!
 
   """창의성"""
-  Creativity: level!
+  creativity: Int!
 
   """적응력"""
-  Adaptability: level!
+  adaptability: Int!
 
   """팀워크"""
-  Teamwork: level!
+  teamwork: Int!
 
   """자기관리"""
-  SelfManagement: level!
-}
-
-"""level"""
-enum level {
-  ONE
-  TWO
-  THREE
-  FOUR
-  FIVE
+  selfManagement: Int!
 }
 
 input InterestedJobInput {
   """관심 직업 1지망"""
-  interestedJob1: JobType!
+  interestedJob1: String!
 
   """관심 직업 2지망"""
-  interestedJob2: JobType!
+  interestedJob2: String!
 
   """관심 직업 3지망"""
-  interestedJob3: JobType!
-}
-
-"""직업 종류"""
-enum JobType {
-  SoftwareDeveloper
-  Doctor
-  Nurse
-  Lawyer
-  Teacher
-  Manager
-  Accountant
-  MarketingExpert
-  GraphicDesigner
-  Engineer
-  Architect
-  Painter
-  Musician
-  Writer
-  Journalist
-  FilmDirector
-  Psychologist
-  SocialWorker
-  EnvironmentalEngineer
-  DigitalMarketer
-  DataAnalyst
-  Biologist
-  Astronomer
-  Statistician
-  MusicProducer
-  Photographer
-  WebDeveloper
-  MedicalDeviceEngineer
-  Beautician
-  SportsTrainer
-  InteriorDesigner
-  Actor
-  RestaurantOwner
-  TravelWriter
-  Chemist
-  Farmer
-  InternationalRelationsExpert
-  YouTuber
-  FoodResearcher
-  OfficeAdministrator
-  MedicalTechnician
-  CarDesigner
-  SportsCommentator
-  SocialMediaManager
-  SalesExpert
-  MarineBiologist
-  Mechanic
-  FinancialAnalyst
-  EarlyChildhoodEducator
-  OfficeManager
+  interestedJob3: String!
 }

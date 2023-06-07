@@ -2,20 +2,20 @@ import { Field, InputType, registerEnumType } from '@nestjs/graphql';
 
 @InputType()
 export class InterestedJobInput {
-  @Field(() => JobType, {
+  @Field(() => String, {
     description: '관심 직업 1지망',
   })
-  interestedJob1: JobType;
+  interestedJob1: string;
 
-  @Field(() => JobType, {
+  @Field(() => String, {
     description: '관심 직업 2지망',
   })
-  interestedJob2: JobType;
+  interestedJob2: string;
 
-  @Field(() => JobType, {
+  @Field(() => String, {
     description: '관심 직업 3지망',
   })
-  interestedJob3: JobType;
+  interestedJob3: string;
 }
 
 export enum JobType {
